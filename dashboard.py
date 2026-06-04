@@ -1955,7 +1955,7 @@ with abas[6]:
                     "Probabilidade": [probs["casa"], probs["empate"], probs["fora"]]
                 })
                 st.bar_chart(df_probs.set_index("Resultado"))
-
+#CORRIGIDO
 with abas[7]:
     st.subheader("🏟️ Estádios")
     ##st.caption("Enciclopédia visual dos estádios da Copa do Mundo 2026")
@@ -2069,10 +2069,10 @@ with abas[7]:
                         f"{row['pais']}, e faz parte da lista de estádios utilizados "
                         f"no projeto interativo da Copa do Mundo 2026."
                     )
-
+#CORRIGDO
 with abas[8]:
-    st.subheader("🧑‍⚖️ Wiki dos Árbitros")
-    st.caption("Ficha dos árbitros e partidas vinculadas na Copa do Mundo 2026")
+    st.subheader("🧑‍⚖️ Árbitros")
+    #st.caption("Ficha dos árbitros e partidas vinculadas na Copa do Mundo 2026")
 
     busca_arbitro = st.text_input(
         "🔎 Buscar árbitro",
