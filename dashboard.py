@@ -1721,7 +1721,7 @@ with abas[2]:
 
 with abas[3]:
     st.subheader("🌝 Seleções interativas")
-    st.caption("Passe o mouse para destacar. Clique para trocar o fundo.")
+    #st.caption("Passe o mouse para destacar. Clique para trocar o fundo.")
 
     cols = st.columns(4)
     idx = 0
