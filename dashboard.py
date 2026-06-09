@@ -8,6 +8,7 @@ import streamlit.components.v1 as components
 import requests
 import joblib
 from sqlalchemy import create_engine, text
+from services.jogo_streamlit_dinamico import render_jogo_tabuleiro
 
 st.set_page_config(layout="wide", page_title="Copa do Mundo 2026")
 
@@ -644,17 +645,6 @@ def stats_h2h(df_passado: pd.DataFrame, casa: str, fora: str, n: int = 10):
         "h2h_gols_fora": gols_fora / total,
         "h2h_peso_comp": soma_peso / total,
     }
-
-def decidir_resultado(prob_casa, prob_empate, prob_fora, rank_casa, rank_fora):
-    rank_diff = abs(rank_casa - rank_fora)
-
-    if rank_diff > 35:
-        return "casa" if rank_casa < rank_fora else "fora"
-
-    if prob_empate > 0.35 and abs(prob_casa - prob_fora) < 0.15:
-        return "empate"
-
-    return "casa" if prob_casa > prob_fora else "fora"
 
 def decidir_resultado(prob_casa, prob_empate, prob_fora, rank_casa, rank_fora):
     rank_diff = abs(rank_casa - rank_fora)
@@ -1696,7 +1686,7 @@ st.caption("Plataforma interativa de análise da Copa do Mundo FIFA")
 
 abas = st.tabs([
     "Todos", "Favoritos", "Competições", "Seleções",
-    "Estatísticas", "API", "Previsão", "Estádios", "Arbitros", "Jogadores"
+    "Estatísticas", "API", "Previsão", "Estádios", "Arbitros", "Jogadores", "Quiz Game"
 ])
 
 with abas[0]:
@@ -1721,7 +1711,7 @@ with abas[2]:
 
 with abas[3]:
     st.subheader("🌝 Seleções interativas")
-    #st.caption("Passe o mouse para destacar. Clique para trocar o fundo.")
+    st.caption("Passe o mouse para destacar. Clique para trocar o fundo.")
 
     cols = st.columns(4)
     idx = 0
@@ -1955,7 +1945,7 @@ with abas[6]:
                     "Probabilidade": [probs["casa"], probs["empate"], probs["fora"]]
                 })
                 st.bar_chart(df_probs.set_index("Resultado"))
-#CORRIGIDO
+
 with abas[7]:
     st.subheader("🏟️ Estádios")
     ##st.caption("Enciclopédia visual dos estádios da Copa do Mundo 2026")
@@ -2069,10 +2059,10 @@ with abas[7]:
                         f"{row['pais']}, e faz parte da lista de estádios utilizados "
                         f"no projeto interativo da Copa do Mundo 2026."
                     )
-#CORRIGDO
+
 with abas[8]:
-    st.subheader("🧑‍⚖️ Árbitros")
-    #st.caption("Ficha dos árbitros e partidas vinculadas na Copa do Mundo 2026")
+    st.subheader("🧑‍⚖️ Wiki dos Árbitros")
+    st.caption("Ficha dos árbitros e partidas vinculadas na Copa do Mundo 2026")
 
     busca_arbitro = st.text_input(
         "🔎 Buscar árbitro",
@@ -2197,6 +2187,7 @@ with abas[8]:
                     )
 
 with abas[9]:
+
     st.subheader("👥 Wiki dos Jogadores")
     st.caption("Elenco, titulares, reservas e notas por seleção")
 
@@ -2422,4 +2413,7 @@ with abas[9]:
             tabela[["Número", "Jogador", "Posição", "Nota", "Titular"]],
             use_container_width=True,
             hide_index=True
-        )
+        )       
+
+with abas[10]:
+    render_jogo_tabuleiro()
