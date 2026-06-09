@@ -615,9 +615,9 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 weight_map = {
-    0: 1.00,  # casa
+    0: 1.00,  # casa ##Neutro
     1: 2.50,  # empate
-    2: 1.00   # fora
+    2: 1.00   # fora ##Neutro
 }
 sample_weights = y_train.map(weight_map).values
 print("Pesos por classe:", weight_map)
@@ -651,4 +651,4 @@ joblib.dump(scaler, "scaler_previsao.pkl")
 joblib.dump(["casa", "empate", "fora"], "classes_previsao.pkl")
 joblib.dump(X.columns.tolist(), "features_previsao.pkl")
 
-print("✅ Modelo salvo com sucesso.")
+print(" Modelo salvo com sucesso.")
